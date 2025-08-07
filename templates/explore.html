@@ -1,0 +1,376 @@
+</html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Brownie Heaven - Products</title>
+  <style>
+    /* Reset */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0 2rem;
+      background: #fff;
+    }
+
+    header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid #ccc;
+    }
+
+    header img {
+      height: 50px;
+      margin-right: 1rem;
+    }
+
+    header nav {
+      margin-left: auto;
+      display: flex;
+      gap: 2rem;
+    }
+
+    header nav a {
+      text-decoration: none;
+      font-weight: bold;
+      color: #333;
+    }
+
+    h2 {
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .container {
+      display: flex;
+      align-items: flex-start;
+      margin: 0 auto;
+      padding: 0px;
+      max-width: 2000px;
+    }
+
+    .sidebar {
+      width: 250px;
+      margin-right: 0px;
+    }
+
+    .product-content {
+      flex: 1;
+      margin-left: 0px;
+      /* Important: Remove excessive left margin */
+    }
+
+    .container {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .sidebar h3 {
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+
+    .filter-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .filter-group label,
+    .sort-group label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      margin-bottom: 0.5rem;
+    }
+
+    .clear-filters {
+      font-size: 0.85rem;
+      color: #007bff;
+      cursor: pointer;
+      user-select: none;
+      margin-left: 1rem;
+    }
+
+    /* Products grid */
+
+    .products-grid {
+      /* flex: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 2rem; */
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      gap: 1.5rem;
+      padding-bottom: 1rem;
+      scroll-behavior: smooth;
+     
+    }
+    .products-grid::-webkit-scrollbar {
+  height: 8px;
+}
+.products-grid::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+.products-grid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+
+    .product-card {
+      border: 1px solid #390b0b;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+      border-radius: 6px;
+      background: #fafafa;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+       /* Fixed width for each card */
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 4px;
+      margin-bottom: 0.8rem;
+    }
+
+    .product-title {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      font-size: 1rem;
+    }
+
+    .product-price {
+      color: #555;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .btn-add {
+      background-color: #2b0a0a;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-add:hover {
+      background-color: #431313;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <!-- <img src="https://i.ibb.co/xqYd0vL/brownie-logo.png" alt="Brownie Heaven Logo" /> -->
+    <nav>
+      <a href="#">HOME</a>
+      <a href="#">ORDER</a>
+    </nav>
+  </header>
+
+  <h2>Products</h2>
+  <div class="container">
+    <!-- Filters sidebar -->
+
+    <aside class="sidebar">
+      <div class="filter-group">
+        <h3>Filter <span class="clear-filters" id="clearFilters">Clear all</span></h3>
+        <label><input type="checkbox" name="category" value="Brownie Gift Box" /> Brownie Gift Box</label>
+        <label><input type="checkbox" name="category" value="Brownies" /> Brownies</label>
+        <label><input type="checkbox" name="category" value="Cakes" /> Cakes</label>
+        <label><input type="checkbox" name="category" value="Christmas Gifting Collection" /> Christmas Gifting
+          Collection</label>
+      </div>
+
+      <div class="sort-group">
+        <h3>Sort By</h3>
+        <label><input type="radio" name="sort" value="featured" checked /> Featured</label>
+        <label><input type="radio" name="sort" value="priceLow" /> Price, Low To High</label>
+        <label><input type="radio" name="sort" value="priceHigh" /> Price, High To Low</label>
+        <label><input type="radio" name="sort" value="alphaAsc" /> Alphabetically, A-Z</label>
+        <label><input type="radio" name="sort" value="alphaDesc" /> Alphabetically, Z-A</label>
+        <label><input type="radio" name="sort" value="dateOld" /> Date, Old To New</label>
+        <label><input type="radio" name="sort" value="dateNew" /> Date, New To Old</label>
+        <label><input type="radio" name="sort" value="bestSelling" /> Best Selling</label>
+      </div>
+    </aside>
+
+    <div class="product-grid ">
+      {% for product in products %}
+      <div class="product-card bg-white p-4 rounded shadow">
+        <img src="{{ product.image_url }}" alt="{{ product.id }}" class="product-card-img">
+        <!-- <h2 class="text-xl font-semibold">{{ product.id }}</h2> -->
+        <p class="product-title">{{ product.name }}</p>
+        <p class="product-price text-green-600 font-bold mt-2">₹{{ product.price }}</p>
+        <!-- <p class="text-sm text-gray-600 mt-1">In stock: {{ product.stock }}</p> -->
+        <a class="btn-add" href="/add-to-cart/{{ product.id }}">Add to Cart</a>
+      </div>
+      {% endfor %}
+      <!-- <p>No products found.</p> -->
+    </div>
+
+    <!-- Products grid -->
+    <!-- <section class="products-grid" id="productsGrid">
+       Products will be inserted here by JS -->
+    <!-- {% for product in products %}
+      <div class="product-card">
+        <img src="{{ product.image_url }}" alt="{{ product.name }}">
+        <h2>{{ product.name }}</h2>
+        <p>{{ product.description }}</p>
+        <span>₹{{ product.price }}</span>
+      </div>
+      {% else %}
+      <p>No products found.</p>
+      {% endfor %} -->
+
+    <!-- </section>
+  </div> -->
+
+    <script>
+      function addToCart(productId) {
+        const product = products.find(p => p.id === productId);
+        alert(Added "${product.title || product.name}" to cart.);f
+      }
+
+      // Sample product data
+      // const products = {{ products | tojson }};
+      // let products = [];
+      // fetch('/api/products')
+      //   .then(res => res.json())
+      //   .then(data => {
+      //     renderProducts(data);
+      //   });
+      let products = [];
+
+      fetch('/api/products')
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+          products = data;           // Set global products
+          filterAndSortProducts();   // Trigger full filtering + sorting
+        });
+
+
+
+      // DOM elements
+      const productsGrid = document.getElementById('productsGrid');
+      const filterCheckboxes = document.querySelectorAll('input[name="category"]');
+      const sortRadios = document.querySelectorAll('input[name="sort"]');
+      const clearFiltersBtn = document.getElementById('clearFilters');
+
+      function renderProducts(items) {
+        productsGrid.innerHTML = '';
+        if (items.length === 0) {
+          productsGrid.innerHTML = '<p>No products found.</p>';
+          return;
+        }
+        items.forEach(product => {
+          const productEl = document.createElement('div');
+          productEl.className = 'product-card';
+          productEl.innerHTML = `
+        <img src="${product.img}" alt="${product.title}" />
+        <div class="product-title">${product.title}</div>
+        <div class="product-price">₹ ${product.price.toFixed(2)}</div>
+        <button class="btn-add" onclick="addToCart(${product.id})">Add to Cart</button>
+      `;
+          productsGrid.appendChild(productEl);
+        });
+      }
+
+      function getSelectedCategories() {
+        return Array.from(filterCheckboxes)
+          .filter(cb => cb.checked)
+          .map(cb => cb.value);
+      }
+
+      function getSelectedSort() {
+        return Array.from(sortRadios).find(radio => radio.checked).value;
+      }
+
+      function filterAndSortProducts() {
+        let filtered = products.slice();
+
+        // Filter by category
+        const selectedCategories = getSelectedCategories();
+        if (selectedCategories.length > 0) {
+          filtered = filtered.filter(p => selectedCategories.includes(p.category));
+        }
+
+        // Sort products
+        const sortBy = getSelectedSort();
+        switch (sortBy) {
+          case 'priceLow':
+            filtered.sort((a, b) => a.price - b.price);
+            break;
+          case 'priceHigh':
+            filtered.sort((a, b) => b.price - a.price);
+            break;
+          case 'alphaAsc':
+            filtered.sort((a, b) => a.title.localeCompare(b.title));
+            break;
+          case 'alphaDesc':
+            filtered.sort((a, b) => b.title.localeCompare(a.title));
+            break;
+          case 'dateOld':
+            filtered.sort((a, b) => new Date(a.dateAdded) - new Date(b.dateAdded));
+            break;
+          case 'dateNew':
+            filtered.sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded));
+            break;
+          case 'bestSelling':
+            filtered.sort((a, b) => a.bestSellingRank - b.bestSellingRank);
+            break;
+          case 'featured':
+          default:
+            // featured - no sorting or default order
+            break;
+        }
+
+        renderProducts(filtered);
+      }
+
+      // Add event listeners for filters and sort
+      filterCheckboxes.forEach(cb => cb.addEventListener('change', filterAndSortProducts));
+      sortRadios.forEach(radio => radio.addEventListener('change', filterAndSortProducts));
+
+      // Clear filters
+      clearFiltersBtn.addEventListener('click', () => {
+        filterCheckboxes.forEach(cb => cb.checked = false);
+        sortRadios.forEach(radio => radio.checked = false);
+        // Set default sort (featured)
+        sortRadios[0].checked = true;
+        filterAndSortProducts();
+      });
+
+      // Dummy Add to Cart function
+      function addToCart(productId) {
+        const product = products.find(p => p.id === productId);
+        alert(Added "${product.title}" to cart.);
+      }
+
+      // Initial render
+      filterAndSortProducts();
+    </script>
+
+</body>
+
+</html>

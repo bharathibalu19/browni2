@@ -1,0 +1,25 @@
+<div id="profileModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-20">
+    <div class="bg-white w-96 p-6 rounded shadow-md relative">
+      <h2 class="text-2xl mb-4 font-bold text-center">My Profile</h2>
+      <form method="POST" action="/update_profile">
+        <label>Name:</label>
+        <input name="name" value="{{ user.name }}" class="w-full border px-3 py-2 mb-3 rounded" required />
+        <label>Email:</label>
+        <input name="email" value="{{ user.email }}" class="w-full border px-3 py-2 mb-3 rounded" readonly />
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Save Changes</button>
+      </form>
+      <hr class="my-4" />
+      <form method="POST" action="/change_password">
+        <label>Current Password:</label>
+        <input type="password" name="current_password" class="w-full border px-3 py-2 mb-2 rounded" required />
+        <label>New Password:</label>
+        <input type="password" name="new_password" class="w-full border px-3 py-2 mb-2 rounded" required />
+        <label>Confirm Password:</label>
+        <input type="password" name="confirm_password" class="w-full border px-3 py-2 mb-3 rounded" required />
+        <button type="submit" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">Change
+          Password</button>
+      </form>
+      <button onclick="toggleProfileModal()"
+        class="absolute top-2 right-2 text-gray-600 hover:text-black">&times;</button>
+    </div>
+  </div>
